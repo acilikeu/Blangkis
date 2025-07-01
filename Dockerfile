@@ -18,6 +18,7 @@ RUN sed -i 's/80/8080/g' /etc/apache2/ports.conf /etc/apache2/sites-enabled/000-
 WORKDIR /var/www/html
 
 # Copy semua file ke container
+RUN cat /var/www/html/.env
 COPY . /var/www/html
 
 # Set permission untuk folder writable
