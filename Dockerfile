@@ -1,5 +1,12 @@
-# Base image
 FROM php:8.2-apache
+
+# Install required PHP extensions
+RUN apt-get update && apt-get install -y \
+    libzip-dev libonig-dev libicu-dev libpng-dev libjpeg-dev libfreetype6-dev unzip \
+    && docker-php-ext-install zip intl gd
+
+# Set working directory to public folder (CodeIgniter entry point)
+WORKDIR /var/www/html/public
 
 # Install dependency
 RUN apt-get update && apt-get install -y \
@@ -33,7 +40,7 @@ RUN chown -R www-data:www-data /var/www/html \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Expose port Railway
+RUN sed -i 's/80/8080/g' /etc/apache2/ports.conf /etc/apache2/sites-enabled/000-default.conf
 EXPOSE 8080
 
 # Jalankan Apache di foreground
