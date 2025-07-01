@@ -21,8 +21,8 @@ WORKDIR /var/www/html
 COPY . /var/www/html
 
 # Set permission untuk folder writable
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/writable
+RUN chown -R www-data:www-data /var/www/html/writable \
+    && chmod -R 775 /var/www/html/writable
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
