@@ -1,13 +1,14 @@
 FROM php:8.2-apache
 
-# Install dependencies
-RUN apt-get update && apt-get install -y unzip git curl libzip-dev zip \
-    && docker-php-ext-install zip pdo pdo_mysql
+# Install dependencies & ekstensi tambahan (intl, gd)
+RUN apt-get update && apt-get install -y \
+    unzip git curl libzip-dev zip libpng-dev libjpeg-dev libfreetype6-dev libicu-dev g++ \
+    && docker-php-ext-install zip pdo pdo_mysql intl gd
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copy project files
+# Copy all project files
 COPY . /var/www/html/
 
 # Set working directory
