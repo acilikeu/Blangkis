@@ -1,0 +1,10 @@
+{
+  "build": {
+    "env": {
+      "APP_ENV": "production"
+    }
+  },
+  "deploy": {
+    "startCommand": "apache2-foreground"
+  }
+}
